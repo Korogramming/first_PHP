@@ -6,11 +6,40 @@ namespace App\Http\Controllers;
 //PostController.php内でPost.phpを使用したいからuse宣言を行っている
 use App\Models\Post;
 use Illuminate\Http\Request;
-
+//use PhpParser\Builder\FunctionLike;
 
 class PostController extends Controller
 {
     public function index(Post $post){ //インポートしたPostをインスタンス化して$postとして使用
-        return $post->get(); //$postの中身を戻り値にする
+        //return $post->get(); //$postの中身を戻り値にする，＜＝＝全件取得するためのコード
+
+        //posts.indexはviewsフォルダの中のpostsフォルダの中にあるindex.blade.phpのことを指しています。
+        //return view('posts.index')->with(['posts' => $post->get()]);
+        //blade内で使う'posts'と設定。'posts'の中身にgetを使いインスタンス化した$postを代入。
+
+        /*$test = $post->orderBy('updated_at', 'DESC')->limit(2)->toSql(); //確認用に追加
+        dd($test); //確認用に追加*/
+
+        //ORM...Object-Relational Mappingの略
+
+        //07-2課題３の初め
+        //$post->get()で全件取得していたところを、$post->getByLimit()とPost.phpに追加した条件で制御した関数を呼び出す
+        //return view('posts.index')->with(['posts' => $post->getByLimit()]);
+
+        //07-2課題３のPaginationインスタンスで返却する方
+        //$post->getByLimit()とこのコードで取得件数を制御した関数を呼び起こす↓
+        return view('posts.index')->with(['posts' => $post->getPaginateByLimit()]);   
+        //getPaginateByLimit()はPost.phpで定義したメゾット
     }
+
+    //07-3ルーティングで呼び出される関数の引数に該当のModelクラスを追加
+    //ここの$postとweb.phpの{post}の中身は一緒にしなければならない
+    public function show(Post $post){
+        return view('posts.show')->with(['post' => $post]);
+        //'post'はbladeファイルで使う変数。中身は$postはid=1のPostインスタンス。
+    }
+
+
+    
 }
+?>
