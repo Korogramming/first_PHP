@@ -14,9 +14,17 @@ use App\Http\Controllers\PostController; //外部にあるPostControllerクラ�
 |
 */
 
+/*
+//Bladeファイルを直接表示するためのルーティング
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('posts.index');
+});*/
 
-Route::get('/posts', [PostController::class, 'index']);
+//
+Route::get('/', [PostController::class, 'index']);
+
+//07-3にて追加showメゾット実行用
+Route::get('/posts/{post}', [PostController::class, 'show']);
+//'/posts/{対象データのID}'にGetリクエストが来たら、PostControlerのshowメゾットを実行
+//{}内はルートパラメータと呼ばれ、対象データのIDを取得できるようにするもの
 
