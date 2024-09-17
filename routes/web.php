@@ -23,8 +23,13 @@ Route::get('/', function () {
 //
 Route::get('/', [PostController::class, 'index']);
 
+//07-4ブログ投稿作成画面表示用のルーティング追加
+Route::get('/posts/create', [PostController::class, 'create']);
 //07-3にて追加showメゾット実行用
 Route::get('/posts/{post}', [PostController::class, 'show']);
 //'/posts/{対象データのID}'にGetリクエストが来たら、PostControlerのshowメゾットを実行
 //{}内はルートパラメータと呼ばれ、対象データのIDを取得できるようにするもの
 
+//07-4解説2ブログ投稿作成処理実行
+//ブログ投稿作成画面で保存ボタンが押下されたときのルーティング
+Route::post("/posts", [PostController::class, 'store']);
