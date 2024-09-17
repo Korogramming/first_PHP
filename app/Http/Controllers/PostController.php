@@ -8,6 +8,10 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 //use PhpParser\Builder\FunctionLike;
 
+//07-4解説２
+//store関数の引数でPostRequest指定で、インスタンス化するタイミングでバリデーションが検証
+use App\Http\Requests\PostRequest;
+
 class PostController extends Controller
 {
     public function index(Post $post){ //インポートしたPostをインスタンス化して$postとして使用
@@ -37,6 +41,23 @@ class PostController extends Controller
     public function show(Post $post){
         return view('posts.show')->with(['post' => $post]);
         //'post'はbladeファイルで使う変数。中身は$postはid=1のPostインスタンス。
+    }
+
+    public function create(){
+        return view("posts.create");
+    }
+
+    //07-4解説２
+    //ユーザからのリクエストに含まれるデータを扱う場合、Requestインスタンスを利用
+    //ユーザの入力データをDBのpostsテーブルにアクセスし保存する必要があるため、空のPostインスタンスを利用
+    public function store(Post $post, PostRequest $request){
+        //postをキーにもつリクエストパラメータを取得する
+        //今回は$inputは[ 'title' => 'タイトル', 'body' => '本文' ]のような配列型式
+        $input = $request["post"];
+        //$post->fill($input)で、空だったPostインスタンスのプロパティを、受け取ったキーごとに上書き
+        $post->fill($input)->save();
+        //今回保存したpostのIDを含んだURLにリダイレクト
+        return redirect("/posts/" . $post->id);
     }
 
 
