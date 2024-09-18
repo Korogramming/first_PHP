@@ -33,3 +33,8 @@ Route::get('/posts/{post}', [PostController::class, 'show']);
 //07-4解説2ブログ投稿作成処理実行
 //ブログ投稿作成画面で保存ボタンが押下されたときのルーティング
 Route::post("/posts", [PostController::class, 'store']);
+
+//07-5ブログ投稿編集画面作成
+Route::get('/posts/{post}/edit', [PostController::class, 'edit']);
+Route::put('/posts/{post}', [PostController::class, 'update']);
+
