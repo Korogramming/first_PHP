@@ -60,6 +60,18 @@ class PostController extends Controller
         return redirect("/posts/" . $post->id);
     }
 
+    //ブログ投稿編集画面表示用のコントローラー実装
+    public function edit(Post $post){
+        return view('posts.edit')->with(['post' => $post]);
+    }
+
+    //07-5ブログ投稿編集を実行する関数をコントローラーに追加
+    public function update(PostRequest $request, Post $post){
+        $input_post = $request['post'];
+        $post->fill($input_post)->save();
+
+        return redirect('/posts/' . $post->id);
+    }
 
     
 }
