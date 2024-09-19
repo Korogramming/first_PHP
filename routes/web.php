@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController; //外部にあるPostControllerクラスを使えるようにします。
+use Illuminate\Routing\RouteRegistrar;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,4 +38,7 @@ Route::post("/posts", [PostController::class, 'store']);
 //07-5ブログ投稿編集画面作成
 Route::get('/posts/{post}/edit', [PostController::class, 'edit']);
 Route::put('/posts/{post}', [PostController::class, 'update']);
+
+//07-6ブログ投稿削除関連のルーティング追加
+Route::delete("/posts/{post}", [PostController::class, "delete"]);
 
