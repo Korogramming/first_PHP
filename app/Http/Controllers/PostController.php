@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 //07-4解説２
 //store関数の引数でPostRequest指定で、インスタンス化するタイミングでバリデーションが検証
 use App\Http\Requests\PostRequest;
+use App\Models\Category;
 
 class PostController extends Controller
 {
@@ -43,9 +44,9 @@ class PostController extends Controller
         //'post'はbladeファイルで使う変数。中身は$postはid=1のPostインスタンス。
     }
 
-    public function create(){
+    /*public function create(){
         return view("posts.create");
-    }
+    }*/
 
     //07-4解説２
     //ユーザからのリクエストに含まれるデータを扱う場合、Requestインスタンスを利用
@@ -76,6 +77,12 @@ class PostController extends Controller
     public function delete(Post $post){
         $post->delete();
         return redirect("/");
+    }
+
+    //08-2新規投稿作成画面でカテゴリーを選択できるようにする
+    //この時07-4で書いたものを削除ー＞PHPは同じメゾットを1つのファイル内に定義することが出来ないから
+    public function create(Category $category){
+        return view('posts.create')->with(['categories' => $category->get()]);
     }
 
     
