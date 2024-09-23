@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController; //外部にあるPostControllerクラスを使えるようにします。
 use Illuminate\Routing\RouteRegistrar;
+//CategoryControllerのindexメゾットを呼び出すようにする
+use App\Http\Controllers\CategoryController;
+use App\Models\Category;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,4 +44,6 @@ Route::put('/posts/{post}', [PostController::class, 'update']);
 
 //07-6ブログ投稿削除関連のルーティング追加
 Route::delete("/posts/{post}", [PostController::class, "delete"]);
+
+Route::get('/categories/{category}', [CategoryController::class, 'index']);
 

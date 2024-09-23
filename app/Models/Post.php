@@ -18,8 +18,10 @@ class Post extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        "title",
-        "body",
+        'title',
+        'body',
+        //category_idを追加ー＞selectフォームのvalueから$category->idを保存
+        'category_id'
     ];
 
     public function getByLimit(int $limit_count = 3){
@@ -28,11 +30,23 @@ class Post extends Model
     }
 
     //Paginationはページごと分けられるみたい
-    public function getPaginateByLimit(int $limit_count = 3){
+    public function getPaginateByLimit(int $limit_count = 5){
         //今までのCollectionインスタンスではなくPaginationインスタンスが返却される
         //・行うこと↓
         //->ControllerクラスのModel呼び出し関数をgetByLimit()からgetPaginateByLimit()に変更
         //->Viewにページネーション表示用HTMLの追加
-        return $this->orderBy('updated_at', 'DESC')->paginate($limit_count);
+        //return $this->orderBy('updated_at', 'DESC')->paginate($limit_count);
+        
+        //カテゴリー名の表示　↓のはEagerローディング
+        return $this::with('category')->orderBy('updated_at', 'DESC')->paginate($limit_count);
+        //リレーションによって増えてしまうデータベースアクセスの回数を減らす
+    }
+
+    
+
+    //08-2Categoryに対するリレーション
+    //「１対多」の関係なので単数系に
+    public function Category(){
+        return $this->belongsTo(Category::class);
     }
 }

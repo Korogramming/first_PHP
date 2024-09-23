@@ -1,5 +1,7 @@
 <?php
 
+//取り返しがつかない場合は参考があるので08-1を見返すこと。
+
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -18,5 +20,7 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        //08-1作成したPostSeederクラスをDatabaseSeeder.phpファイルで呼び出し
+        $this->call(PostSeeder::class);
     }
 }

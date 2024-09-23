@@ -17,6 +17,9 @@
             <p>{{ $post->body }}</p>
         </div>
     </div>
+    <div class='category_id'>
+        <a href="/categories/{{ $post->category->id }}">{{ $post->category->name }}</a>
+    </div>
     <!--07-5ブログ投稿詳細画面へのブログ投稿編集画面表示用導線追加-->
     <div class="edit">
         <a href="/posts/{{ $post->id }}/edit">edit</a>
@@ -24,7 +27,5 @@
     <div class="footer">
         <a href="/">戻る</a>
     </div>
-    
-    
 </body>
 </html>

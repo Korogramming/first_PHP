@@ -30,6 +30,9 @@
                 </div>
             @endforeach
         </div>
+        <div class="footer">
+            <a href="/">戻る</a>
+        </div>
         <!--07-2課題３最後、ViewファイルにページネーションのHTMLの追加-->
         <div class="paginate">
             {{ $posts->links() }}
